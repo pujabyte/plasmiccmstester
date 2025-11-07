@@ -1,0 +1,80 @@
+{
+  "projects": [
+    {
+      "projectId": "hjKYmYi6HMwK6TRyk7ew5R",
+      "version": "6.48.0",
+      "dependencies": {},
+      "lang": "ts",
+      "fileLocks": [
+        {
+          "assetId": "hjKYmYi6HMwK6TRyk7ew5R",
+          "type": "projectCss",
+          "checksum": "0914b411adf60d87fad37583f7b43300"
+        },
+        {
+          "assetId": "hjKYmYi6HMwK6TRyk7ew5R",
+          "checksum": "689bfe048c805967249df4fe6b0cb88a",
+          "type": "globalContexts"
+        },
+        {
+          "assetId": "hjKYmYi6HMwK6TRyk7ew5R",
+          "checksum": "1cdeaa5ec55a72854654233e68cb9294",
+          "type": "projectModule"
+        },
+        {
+          "assetId": "hjKYmYi6HMwK6TRyk7ew5R",
+          "checksum": "c1ed523c9e2ba576a837bd0545a9b3d7",
+          "type": "styleTokensProvider"
+        }
+      ],
+      "codegenVersion": "0.0.2"
+    },
+    {
+      "projectId": "dU9SZPrnMUWLfHqMrxdfvS",
+      "version": "latest",
+      "dependencies": {
+        "hjKYmYi6HMwK6TRyk7ew5R": "6.48.0"
+      },
+      "lang": "ts",
+      "fileLocks": [
+        {
+          "type": "globalVariant",
+          "assetId": "fkLVulOIgg56",
+          "checksum": "c36af9a21f53b293b2f28fd1ed82f742"
+        },
+        {
+          "assetId": "dU9SZPrnMUWLfHqMrxdfvS",
+          "type": "projectCss",
+          "checksum": "8de0adce423163d08985723fa06b3958"
+        },
+        {
+          "assetId": "dU9SZPrnMUWLfHqMrxdfvS",
+          "checksum": "06e0d036efdf7ee2c59c41681983d451",
+          "type": "globalContexts"
+        },
+        {
+          "assetId": "dU9SZPrnMUWLfHqMrxdfvS",
+          "checksum": "319f3e526fb0596e6439668a76f0e0e5",
+          "type": "projectModule"
+        },
+        {
+          "assetId": "dU9SZPrnMUWLfHqMrxdfvS",
+          "checksum": "5a56b2ac256e85abd7bf8833e0f5bd17",
+          "type": "styleTokensProvider"
+        },
+        {
+          "type": "renderModule",
+          "assetId": "OERS3-fRLQ70",
+          "checksum": "1a259338863645df1ae710eb9a132d4a"
+        },
+        {
+          "type": "cssRules",
+          "assetId": "OERS3-fRLQ70",
+          "checksum": "1a259338863645df1ae710eb9a132d4a"
+        }
+      ],
+      "codegenVersion": "0.0.2"
+    }
+  ],
+  "cliVersion": "0.1.348"
+}
