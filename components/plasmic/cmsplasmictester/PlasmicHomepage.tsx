@@ -60,6 +60,8 @@ import {
 } from "@plasmicapp/react-web/lib/host";
 
 import { CmsQueryRepeater } from "@plasmicpkgs/plasmic-cms";
+import { AntdPagination } from "@plasmicpkgs/antd5/skinny/registerPagination";
+import { paginationHelpers as AntdPagination_Helpers } from "@plasmicpkgs/antd5/skinny/registerPagination";
 import { _useGlobalVariants } from "./plasmic"; // plasmic-import: dU9SZPrnMUWLfHqMrxdfvS/projectModule
 import { _useStyleTokens } from "./PlasmicStyleTokensProvider"; // plasmic-import: dU9SZPrnMUWLfHqMrxdfvS/styleTokensProvider
 
@@ -84,7 +86,7 @@ export type PlasmicHomepage__OverridesType = {
   section?: Flex__<"section">;
   h1?: Flex__<"h1">;
   cmsDataFetcher?: Flex__<typeof CmsQueryRepeater>;
-  freeBox?: Flex__<"div">;
+  pagination?: Flex__<typeof AntdPagination>;
 };
 
 export interface DefaultHomepageProps {}
@@ -127,6 +129,50 @@ function PlasmicHomepage__RenderFunc(props: {
   const $ctx = useDataEnv?.() || {};
   const refsRef = React.useRef({});
   const $refs = refsRef.current;
+
+  const stateSpecs: Parameters<typeof useDollarState>[0] = React.useMemo(
+    () => [
+      {
+        path: "pagination.currentPage",
+        type: "private",
+        variableType: "number",
+        initFunc: ({ $props, $state, $queries, $ctx }) => 1,
+
+        onMutate: generateOnMutateForSpec("currentPage", AntdPagination_Helpers)
+      },
+      {
+        path: "pagination.pageSize",
+        type: "private",
+        variableType: "number",
+        initFunc: ({ $props, $state, $queries, $ctx }) => 2,
+
+        onMutate: generateOnMutateForSpec("pageSize", AntdPagination_Helpers)
+      },
+      {
+        path: "pagination.startIndex",
+        type: "private",
+        variableType: "number",
+        initFunc: ({ $props, $state, $queries, $ctx }) => undefined,
+
+        onMutate: generateOnMutateForSpec("startIndex", AntdPagination_Helpers)
+      },
+      {
+        path: "pagination.endIndex",
+        type: "private",
+        variableType: "number",
+        initFunc: ({ $props, $state, $queries, $ctx }) => undefined,
+
+        onMutate: generateOnMutateForSpec("endIndex", AntdPagination_Helpers)
+      }
+    ],
+    [$props, $ctx, $refs]
+  );
+  const $state = useDollarState(stateSpecs, {
+    $props,
+    $ctx,
+    $queries: {},
+    $refs
+  });
 
   const styleTokensClassNames = _useStyleTokens();
 
@@ -210,41 +256,168 @@ function PlasmicHomepage__RenderFunc(props: {
                   )}
                 </DataCtxReader__>
               }
-              noAutoRepeat={false}
+              mode={"rows"}
+              noAutoRepeat={true}
               noLayout={false}
               useDraft={false}
             >
               <DataCtxReader__>
                 {$ctx => (
                   <div
-                    data-plasmic-name={"freeBox"}
-                    data-plasmic-override={overrides.freeBox}
-                    className={classNames(projectcss.all, sty.freeBox)}
+                    className={classNames(projectcss.all, sty.freeBox__lHhKg)}
                   >
-                    <div
-                      className={classNames(
-                        projectcss.all,
-                        projectcss.__wab_text,
-                        sty.text__mr02V
-                      )}
-                    >
-                      <React.Fragment>
-                        {(() => {
+                    {(_par =>
+                      !_par ? [] : Array.isArray(_par) ? _par : [_par])(
+                      (() => {
+                        try {
+                          return $ctx.plasmicCmsMonthlyReportCollection.slice(
+                            $state.pagination.startIndex,
+                            $state.pagination.startIndex +
+                              $state.pagination.pageSize
+                          );
+                        } catch (e) {
+                          if (
+                            e instanceof TypeError ||
+                            e?.plasmicType === "PlasmicUndefinedDataError"
+                          ) {
+                            return [];
+                          }
+                          throw e;
+                        }
+                      })()
+                    ).map((__plasmic_item_0, __plasmic_idx_0) => {
+                      const currentItem = __plasmic_item_0;
+                      const currentIndex = __plasmic_idx_0;
+                      return (
+                        <div
+                          className={classNames(
+                            projectcss.all,
+                            sty.freeBox__uTfyW
+                          )}
+                          key={currentIndex}
+                        >
+                          <div
+                            className={classNames(
+                              projectcss.all,
+                              projectcss.__wab_text,
+                              sty.text__smQyN
+                            )}
+                          >
+                            <React.Fragment>
+                              {(() => {
+                                try {
+                                  return currentItem.data.title;
+                                } catch (e) {
+                                  if (
+                                    e instanceof TypeError ||
+                                    e?.plasmicType ===
+                                      "PlasmicUndefinedDataError"
+                                  ) {
+                                    return "";
+                                  }
+                                  throw e;
+                                }
+                              })()}
+                            </React.Fragment>
+                          </div>
+                        </div>
+                      );
+                    })}
+                    {(() => {
+                      const child$Props = {
+                        className: classNames("__wab_instance", sty.pagination),
+                        current: generateStateValueProp($state, [
+                          "pagination",
+                          "currentPage"
+                        ]),
+                        defaultCurrent: 1,
+                        defaultPageSize: 2,
+                        onChange: async (...eventArgs: any) => {
+                          generateStateOnChangePropForCodeComponents(
+                            $state,
+                            "currentPage",
+                            ["pagination", "currentPage"],
+                            AntdPagination_Helpers
+                          ).apply(null, eventArgs);
+                          generateStateOnChangePropForCodeComponents(
+                            $state,
+                            "startIndex",
+                            ["pagination", "startIndex"],
+                            AntdPagination_Helpers
+                          ).apply(null, eventArgs);
+                          generateStateOnChangePropForCodeComponents(
+                            $state,
+                            "endIndex",
+                            ["pagination", "endIndex"],
+                            AntdPagination_Helpers
+                          ).apply(null, eventArgs);
+                        },
+                        onShowSizeChange: async (...eventArgs: any) => {
+                          generateStateOnChangePropForCodeComponents(
+                            $state,
+                            "pageSize",
+                            ["pagination", "pageSize"],
+                            AntdPagination_Helpers
+                          ).apply(null, eventArgs);
+                        },
+                        pageSize: generateStateValueProp($state, [
+                          "pagination",
+                          "pageSize"
+                        ]),
+                        pageSizeOptions: [
+                          { pageSize: 10 },
+                          { pageSize: 20 },
+                          { pageSize: 50 },
+                          { pageSize: 100 }
+                        ],
+                        total: (() => {
                           try {
-                            return $ctx.plasmicCmsMonthlyReportItem.data.report
-                              .name;
+                            return $ctx.plasmicCmsMonthlyReportCollection
+                              .length;
                           } catch (e) {
                             if (
                               e instanceof TypeError ||
                               e?.plasmicType === "PlasmicUndefinedDataError"
                             ) {
-                              return "";
+                              return undefined;
                             }
                             throw e;
                           }
-                        })()}
-                      </React.Fragment>
-                    </div>
+                        })()
+                      };
+                      initializeCodeComponentStates(
+                        $state,
+                        [
+                          {
+                            name: "currentPage",
+                            plasmicStateName: "pagination.currentPage"
+                          },
+                          {
+                            name: "pageSize",
+                            plasmicStateName: "pagination.pageSize"
+                          },
+                          {
+                            name: "startIndex",
+                            plasmicStateName: "pagination.startIndex"
+                          },
+                          {
+                            name: "endIndex",
+                            plasmicStateName: "pagination.endIndex"
+                          }
+                        ],
+                        [],
+                        AntdPagination_Helpers ?? {},
+                        child$Props
+                      );
+
+                      return (
+                        <AntdPagination
+                          data-plasmic-name={"pagination"}
+                          data-plasmic-override={overrides.pagination}
+                          {...child$Props}
+                        />
+                      );
+                    })()}
                   </div>
                 )}
               </DataCtxReader__>
@@ -257,11 +430,11 @@ function PlasmicHomepage__RenderFunc(props: {
 }
 
 const PlasmicDescendants = {
-  root: ["root", "section", "h1", "cmsDataFetcher", "freeBox"],
-  section: ["section", "h1", "cmsDataFetcher", "freeBox"],
+  root: ["root", "section", "h1", "cmsDataFetcher", "pagination"],
+  section: ["section", "h1", "cmsDataFetcher", "pagination"],
   h1: ["h1"],
-  cmsDataFetcher: ["cmsDataFetcher", "freeBox"],
-  freeBox: ["freeBox"]
+  cmsDataFetcher: ["cmsDataFetcher", "pagination"],
+  pagination: ["pagination"]
 } as const;
 type NodeNameType = keyof typeof PlasmicDescendants;
 type DescendantsType<T extends NodeNameType> =
@@ -271,7 +444,7 @@ type NodeDefaultElementType = {
   section: "section";
   h1: "h1";
   cmsDataFetcher: typeof CmsQueryRepeater;
-  freeBox: "div";
+  pagination: typeof AntdPagination;
 };
 
 type ReservedPropsType = "variants" | "args" | "overrides";
@@ -339,7 +512,7 @@ export const PlasmicHomepage = Object.assign(
     section: makeNodeComponent("section"),
     h1: makeNodeComponent("h1"),
     cmsDataFetcher: makeNodeComponent("cmsDataFetcher"),
-    freeBox: makeNodeComponent("freeBox"),
+    pagination: makeNodeComponent("pagination"),
 
     // Metadata about props expected for PlasmicHomepage
     internalVariantProps: PlasmicHomepage__VariantProps,
