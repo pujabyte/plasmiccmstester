@@ -86,6 +86,7 @@ export type PlasmicHomepage__OverridesType = {
   section?: Flex__<"section">;
   h1?: Flex__<"h1">;
   cmsDataFetcher?: Flex__<typeof CmsQueryRepeater>;
+  link?: Flex__<"a"> & Partial<LinkProps>;
   pagination?: Flex__<typeof AntdPagination>;
 };
 
@@ -144,7 +145,7 @@ function PlasmicHomepage__RenderFunc(props: {
         path: "pagination.pageSize",
         type: "private",
         variableType: "number",
-        initFunc: ({ $props, $state, $queries, $ctx }) => 2,
+        initFunc: ({ $props, $state, $queries, $ctx }) => 5,
 
         onMutate: generateOnMutateForSpec("pageSize", AntdPagination_Helpers)
       },
@@ -296,12 +297,30 @@ function PlasmicHomepage__RenderFunc(props: {
                           )}
                           key={currentIndex}
                         >
-                          <div
+                          <PlasmicLink__
+                            data-plasmic-name={"link"}
+                            data-plasmic-override={overrides.link}
                             className={classNames(
                               projectcss.all,
+                              projectcss.a,
                               projectcss.__wab_text,
-                              sty.text__smQyN
+                              sty.link
                             )}
+                            component={Link}
+                            href={(() => {
+                              try {
+                                return currentItem.data.report;
+                              } catch (e) {
+                                if (
+                                  e instanceof TypeError ||
+                                  e?.plasmicType === "PlasmicUndefinedDataError"
+                                ) {
+                                  return undefined;
+                                }
+                                throw e;
+                              }
+                            })()}
+                            platform={"nextjs"}
                           >
                             <React.Fragment>
                               {(() => {
@@ -319,7 +338,7 @@ function PlasmicHomepage__RenderFunc(props: {
                                 }
                               })()}
                             </React.Fragment>
-                          </div>
+                          </PlasmicLink__>
                         </div>
                       );
                     })}
@@ -331,7 +350,7 @@ function PlasmicHomepage__RenderFunc(props: {
                           "currentPage"
                         ]),
                         defaultCurrent: 1,
-                        defaultPageSize: 2,
+                        defaultPageSize: 5,
                         onChange: async (...eventArgs: any) => {
                           generateStateOnChangePropForCodeComponents(
                             $state,
@@ -430,10 +449,11 @@ function PlasmicHomepage__RenderFunc(props: {
 }
 
 const PlasmicDescendants = {
-  root: ["root", "section", "h1", "cmsDataFetcher", "pagination"],
-  section: ["section", "h1", "cmsDataFetcher", "pagination"],
+  root: ["root", "section", "h1", "cmsDataFetcher", "link", "pagination"],
+  section: ["section", "h1", "cmsDataFetcher", "link", "pagination"],
   h1: ["h1"],
-  cmsDataFetcher: ["cmsDataFetcher", "pagination"],
+  cmsDataFetcher: ["cmsDataFetcher", "link", "pagination"],
+  link: ["link"],
   pagination: ["pagination"]
 } as const;
 type NodeNameType = keyof typeof PlasmicDescendants;
@@ -444,6 +464,7 @@ type NodeDefaultElementType = {
   section: "section";
   h1: "h1";
   cmsDataFetcher: typeof CmsQueryRepeater;
+  link: "a";
   pagination: typeof AntdPagination;
 };
 
@@ -512,6 +533,7 @@ export const PlasmicHomepage = Object.assign(
     section: makeNodeComponent("section"),
     h1: makeNodeComponent("h1"),
     cmsDataFetcher: makeNodeComponent("cmsDataFetcher"),
+    link: makeNodeComponent("link"),
     pagination: makeNodeComponent("pagination"),
 
     // Metadata about props expected for PlasmicHomepage
